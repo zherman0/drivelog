@@ -1,0 +1,11 @@
+# Log files
+logs/*.log
+
+# Credentials and sensitive configuration
+config/credentials.php
+
+# Temporary test files
+test.php
+test-db.php
+index-debug.php
+

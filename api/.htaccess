@@ -1,0 +1,16 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# Redirect all requests to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Deny access to hidden files (Apache 2.4 syntax)
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Prevent directory listing
+Options -Indexes
+
