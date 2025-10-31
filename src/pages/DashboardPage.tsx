@@ -25,6 +25,7 @@ import {
   EditIcon,
   TrashIcon,
   MoonIcon,
+  SunIcon,
 } from "@patternfly/react-icons";
 import { useAuth } from "../context/AuthContext";
 import { useGetLogs, useDeleteLog } from "../hooks/useLogs";
@@ -248,7 +249,21 @@ export const DashboardPage = () => {
                               Night
                             </span>
                           ) : (
-                            "Day"
+                            <span
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "0.5rem",
+                              }}
+                            >
+                              <SunIcon
+                                style={{
+                                  color:
+                                    "var(--pf-v6-global--warning-color--100)",
+                                }}
+                              />
+                              Day
+                            </span>
                           )}
                         </Td>
                         <Td>{log.description}</Td>
