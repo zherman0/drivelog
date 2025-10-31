@@ -18,6 +18,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Icon,
 } from "@patternfly/react-core";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import {
@@ -180,12 +181,14 @@ export const DashboardPage = () => {
                       marginBottom: "0.5rem",
                     }}
                   >
-                    <SunIcon
-                      style={{
-                        fontSize: "2.5rem",
-                        color: "var(--pf-v6-global--warning-color--100)",
-                      }}
-                    />
+                    <Icon status="warning">
+                      <SunIcon
+                        style={{
+                          fontSize: "2.5rem",
+                          color: "var(--pf-v6-global--warning-color--100)",
+                        }}
+                      />
+                    </Icon>
                     <Title headingLevel="h3" size="lg">
                       Day Hours
                     </Title>
@@ -213,12 +216,14 @@ export const DashboardPage = () => {
                       marginBottom: "0.5rem",
                     }}
                   >
-                    <MoonIcon
-                      style={{
-                        fontSize: "2.5rem",
-                        color: "var(--pf-v6-global--info-color--100)",
-                      }}
-                    />
+                    <Icon status="info">
+                      <MoonIcon
+                        style={{
+                          fontSize: "2.5rem",
+                          color: "var(--pf-v6-global--info-color--100)",
+                        }}
+                      />
+                    </Icon>
                     <Title headingLevel="h3" size="lg">
                       Night Hours
                     </Title>
