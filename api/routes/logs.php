@@ -96,6 +96,7 @@ switch ($method) {
         $drivingLog->start_time = $data['start_time'];
         $drivingLog->end_time = $data['end_time'];
         $drivingLog->description = $data['description'] ?? '';
+        $drivingLog->is_nighttime = isset($data['is_nighttime']) ? (bool)$data['is_nighttime'] : false;
         
         if ($drivingLog->create()) {
             $log = $drivingLog->getById($drivingLog->log_id);
@@ -138,6 +139,7 @@ switch ($method) {
         $drivingLog->start_time = $data['start_time'] ?? $existingLog['start_time'];
         $drivingLog->end_time = $data['end_time'] ?? $existingLog['end_time'];
         $drivingLog->description = $data['description'] ?? $existingLog['description'];
+        $drivingLog->is_nighttime = isset($data['is_nighttime']) ? (bool)$data['is_nighttime'] : (bool)$existingLog['is_nighttime'];
         
         if ($drivingLog->update()) {
             $log = $drivingLog->getById($log_id);

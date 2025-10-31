@@ -12,6 +12,7 @@ class DrivingLog {
     public $start_time;
     public $end_time;
     public $description;
+    public $is_nighttime;
     public $created_at;
     public $updated_at;
 
@@ -24,8 +25,8 @@ class DrivingLog {
      */
     public function create() {
         $query = "INSERT INTO " . $this->table_name . "
-                  (user_id, start_time, end_time, description)
-                  VALUES (:user_id, :start_time, :end_time, :description)";
+                  (user_id, start_time, end_time, description, is_nighttime)
+                  VALUES (:user_id, :start_time, :end_time, :description, :is_nighttime)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -40,6 +41,7 @@ class DrivingLog {
         $stmt->bindParam(":start_time", $this->start_time);
         $stmt->bindParam(":end_time", $this->end_time);
         $stmt->bindParam(":description", $this->description);
+        $stmt->bindParam(":is_nighttime", $this->is_nighttime, PDO::PARAM_BOOL);
 
         if ($stmt->execute()) {
             $this->log_id = $this->conn->lastInsertId();
@@ -53,7 +55,7 @@ class DrivingLog {
      * Get all logs for a user
      */
     public function getByUserId($user_id, $limit = 100, $offset = 0) {
-        $query = "SELECT log_id, user_id, start_time, end_time, description, created_at, updated_at
+        $query = "SELECT log_id, user_id, start_time, end_time, description, is_nighttime, created_at, updated_at
                   FROM " . $this->table_name . "
                   WHERE user_id = :user_id
                   ORDER BY start_time DESC
@@ -72,7 +74,7 @@ class DrivingLog {
      * Get a single log by ID
      */
     public function getById($log_id) {
-        $query = "SELECT log_id, user_id, start_time, end_time, description, created_at, updated_at
+        $query = "SELECT log_id, user_id, start_time, end_time, description, is_nighttime, created_at, updated_at
                   FROM " . $this->table_name . "
                   WHERE log_id = :log_id
                   LIMIT 1";
@@ -104,7 +106,8 @@ class DrivingLog {
         $query = "UPDATE " . $this->table_name . "
                   SET start_time = :start_time,
                       end_time = :end_time,
-                      description = :description
+                      description = :description,
+                      is_nighttime = :is_nighttime
                   WHERE log_id = :log_id AND user_id = :user_id";
 
         $stmt = $this->conn->prepare($query);
@@ -120,6 +123,7 @@ class DrivingLog {
         $stmt->bindParam(":start_time", $this->start_time);
         $stmt->bindParam(":end_time", $this->end_time);
         $stmt->bindParam(":description", $this->description);
+        $stmt->bindParam(":is_nighttime", $this->is_nighttime, PDO::PARAM_BOOL);
         $stmt->bindParam(":log_id", $this->log_id);
         $stmt->bindParam(":user_id", $this->user_id);
 
@@ -148,7 +152,7 @@ class DrivingLog {
      * Get logs by date range
      */
     public function getByDateRange($user_id, $start_date, $end_date) {
-        $query = "SELECT log_id, user_id, start_time, end_time, description, created_at, updated_at
+        $query = "SELECT log_id, user_id, start_time, end_time, description, is_nighttime, created_at, updated_at
                   FROM " . $this->table_name . "
                   WHERE user_id = :user_id
                     AND start_time >= :start_date

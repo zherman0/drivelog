@@ -14,6 +14,7 @@ import {
   Alert,
   Grid,
   GridItem,
+  Checkbox,
 } from "@patternfly/react-core";
 import { useUpdateLog } from "../hooks/useLogs";
 
@@ -22,6 +23,7 @@ interface DrivingLog {
   start_time: string;
   end_time: string;
   description: string;
+  is_nighttime: boolean;
 }
 
 interface EditLogModalProps {
@@ -37,6 +39,7 @@ export const EditLogModal = ({ isOpen, onClose, log }: EditLogModalProps) => {
   const [endDate, setEndDate] = useState("");
   const [endTime, setEndTime] = useState("");
   const [description, setDescription] = useState("");
+  const [isNighttime, setIsNighttime] = useState(false);
 
   useEffect(() => {
     if (log) {
@@ -48,6 +51,7 @@ export const EditLogModal = ({ isOpen, onClose, log }: EditLogModalProps) => {
       setEndDate(eDate);
       setEndTime(eTime.substring(0, 5)); // HH:MM format
       setDescription(log.description);
+      setIsNighttime(log.is_nighttime || false);
     }
   }, [log]);
 
@@ -72,6 +76,7 @@ export const EditLogModal = ({ isOpen, onClose, log }: EditLogModalProps) => {
           start_time: startDateTime,
           end_time: endDateTime,
           description,
+          is_nighttime: isNighttime,
         },
       },
       {
@@ -152,6 +157,15 @@ export const EditLogModal = ({ isOpen, onClose, log }: EditLogModalProps) => {
                 />
               </GridItem>
             </Grid>
+          </FormGroup>
+
+          <FormGroup fieldId="nighttime">
+            <Checkbox
+              id="nighttime"
+              label="This was nighttime driving"
+              isChecked={isNighttime}
+              onChange={(_event, checked) => setIsNighttime(checked)}
+            />
           </FormGroup>
 
           <FormGroup label="Description" isRequired fieldId="description">

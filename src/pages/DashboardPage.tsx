@@ -20,7 +20,12 @@ import {
   ModalFooter,
 } from "@patternfly/react-core";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
-import { PlusCircleIcon, EditIcon, TrashIcon } from "@patternfly/react-icons";
+import {
+  PlusCircleIcon,
+  EditIcon,
+  TrashIcon,
+  MoonIcon,
+} from "@patternfly/react-icons";
 import { useAuth } from "../context/AuthContext";
 import { useGetLogs, useDeleteLog } from "../hooks/useLogs";
 import { AppHeader } from "../components/AppHeader";
@@ -33,6 +38,7 @@ interface DrivingLog {
   start_time: string;
   end_time: string;
   description: string;
+  is_nighttime: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -212,6 +218,7 @@ export const DashboardPage = () => {
                       <Th>Start Time</Th>
                       <Th>End Time</Th>
                       <Th>Duration</Th>
+                      <Th>Type</Th>
                       <Th>Description</Th>
                       <Th>Actions</Th>
                     </Tr>
@@ -223,6 +230,26 @@ export const DashboardPage = () => {
                         <Td>{formatDateTime(log.end_time)}</Td>
                         <Td>
                           {calculateDuration(log.start_time, log.end_time)}
+                        </Td>
+                        <Td>
+                          {log.is_nighttime ? (
+                            <span
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "0.5rem",
+                              }}
+                            >
+                              <MoonIcon
+                                style={{
+                                  color: "var(--pf-v6-global--info-color--100)",
+                                }}
+                              />
+                              Night
+                            </span>
+                          ) : (
+                            "Day"
+                          )}
                         </Td>
                         <Td>{log.description}</Td>
                         <Td>

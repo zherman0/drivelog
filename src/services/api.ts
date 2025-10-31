@@ -198,6 +198,7 @@ class ApiService {
     start_time: string;
     end_time: string;
     description: string;
+    is_nighttime?: boolean;
   }) {
     const response = await fetch(`${this.baseUrl}/logs`, {
       method: "POST",
@@ -220,6 +221,7 @@ class ApiService {
       start_time: string;
       end_time: string;
       description: string;
+      is_nighttime?: boolean;
     }
   ) {
     const response = await fetch(`${this.baseUrl}/logs/${logId}`, {

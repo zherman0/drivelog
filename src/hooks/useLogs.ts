@@ -16,6 +16,7 @@ export const useCreateLog = () => {
       start_time: string;
       end_time: string;
       description: string;
+      is_nighttime?: boolean;
     }) => api.createLog(logData),
     onSuccess: () => {
       // Invalidate and refetch logs after creating
@@ -37,6 +38,7 @@ export const useUpdateLog = () => {
         start_time: string;
         end_time: string;
         description: string;
+        is_nighttime?: boolean;
       };
     }) => api.updateLog(logId, logData),
     onSuccess: () => {
