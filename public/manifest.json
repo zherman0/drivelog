@@ -2,7 +2,7 @@
   "name": "DriveLog - Track Your Driving Progress",
   "short_name": "DriveLog",
   "description": "Track your driving practice hours and progress toward your license. Perfect for student drivers and their parents.",
-  "start_url": "/",
+  "start_url": "/drive/",
   "display": "standalone",
   "background_color": "#151515",
   "theme_color": "#151515",
