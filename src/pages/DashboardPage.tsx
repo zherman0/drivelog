@@ -19,6 +19,8 @@ import {
   ModalBody,
   ModalFooter,
   Icon,
+  Flex,
+  FlexItem,
 } from "@patternfly/react-core";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import {
@@ -343,20 +345,24 @@ export const DashboardPage = () => {
                           )}
                         </Td>
                         <Td>{log.description}</Td>
-                        <Td>
-                          <Button
-                            variant="plain"
-                            icon={<EditIcon />}
-                            onClick={() => handleEdit(log)}
-                            aria-label="Edit log"
-                          />
-                          <Button
-                            variant="plain"
-                            icon={<TrashIcon />}
-                            onClick={() => handleDeleteClick(log.log_id)}
-                            aria-label="Delete log"
-                            isDanger
-                          />
+                        <Td isActionCell>
+                          <Flex>
+                            <FlexItem style={{ display: "flex" }}>
+                              <Button
+                                variant="plain"
+                                icon={<EditIcon />}
+                                onClick={() => handleEdit(log)}
+                                aria-label="Edit log"
+                              />
+                              <Button
+                                variant="plain"
+                                icon={<TrashIcon />}
+                                onClick={() => handleDeleteClick(log.log_id)}
+                                aria-label="Delete log"
+                                isDanger
+                              />
+                            </FlexItem>
+                          </Flex>
                         </Td>
                       </Tr>
                     ))}
