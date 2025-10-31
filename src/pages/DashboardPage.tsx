@@ -55,7 +55,12 @@ export const DashboardPage = () => {
   const [deleteLogId, setDeleteLogId] = useState<number | null>(null);
 
   const logs: DrivingLog[] = data?.logs || [];
-  const stats = data?.stats || { total_logs: 0, total_driving_hours: 0 };
+  const stats = data?.stats || {
+    total_logs: 0,
+    total_driving_hours: 0,
+    daytime_driving_hours: 0,
+    nighttime_driving_hours: 0,
+  };
 
   const handleEdit = (log: DrivingLog) => {
     setSelectedLog(log);
@@ -128,7 +133,7 @@ export const DashboardPage = () => {
 
           {/* Statistics Cards */}
           <Grid hasGutter>
-            <GridItem span={12} md={6}>
+            <GridItem span={12} md={6} lg={3}>
               <Card isFullHeight>
                 <CardBody>
                   <Title headingLevel="h3" size="lg">
@@ -146,7 +151,7 @@ export const DashboardPage = () => {
                 </CardBody>
               </Card>
             </GridItem>
-            <GridItem span={12} md={6}>
+            <GridItem span={12} md={6} lg={3}>
               <Card isFullHeight>
                 <CardBody>
                   <Title headingLevel="h3" size="lg">
@@ -160,6 +165,72 @@ export const DashboardPage = () => {
                     }}
                   >
                     {stats.total_driving_hours}
+                  </div>
+                </CardBody>
+              </Card>
+            </GridItem>
+            <GridItem span={12} md={6} lg={3}>
+              <Card isFullHeight>
+                <CardBody>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1rem",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    <SunIcon
+                      style={{
+                        fontSize: "2.5rem",
+                        color: "var(--pf-v6-global--warning-color--100)",
+                      }}
+                    />
+                    <Title headingLevel="h3" size="lg">
+                      Day Hours
+                    </Title>
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "2rem",
+                      fontWeight: "bold",
+                      marginTop: "1rem",
+                    }}
+                  >
+                    {stats.daytime_driving_hours || 0}
+                  </div>
+                </CardBody>
+              </Card>
+            </GridItem>
+            <GridItem span={12} md={6} lg={3}>
+              <Card isFullHeight>
+                <CardBody>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1rem",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    <MoonIcon
+                      style={{
+                        fontSize: "2.5rem",
+                        color: "var(--pf-v6-global--info-color--100)",
+                      }}
+                    />
+                    <Title headingLevel="h3" size="lg">
+                      Night Hours
+                    </Title>
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "2rem",
+                      fontWeight: "bold",
+                      marginTop: "1rem",
+                    }}
+                  >
+                    {stats.nighttime_driving_hours || 0}
                   </div>
                 </CardBody>
               </Card>

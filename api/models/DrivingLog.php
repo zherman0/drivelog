@@ -195,6 +195,38 @@ class DrivingLog {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['total'];
     }
+
+    /**
+     * Get total daytime driving minutes for user
+     */
+    public function getDaytimeDrivingTime($user_id) {
+        $query = "SELECT SUM(TIMESTAMPDIFF(MINUTE, start_time, end_time)) as total_minutes
+                  FROM " . $this->table_name . "
+                  WHERE user_id = :user_id AND is_nighttime = 0";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":user_id", $user_id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total_minutes'] ?? 0;
+    }
+
+    /**
+     * Get total nighttime driving minutes for user
+     */
+    public function getNighttimeDrivingTime($user_id) {
+        $query = "SELECT SUM(TIMESTAMPDIFF(MINUTE, start_time, end_time)) as total_minutes
+                  FROM " . $this->table_name . "
+                  WHERE user_id = :user_id AND is_nighttime = 1";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":user_id", $user_id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total_minutes'] ?? 0;
+    }
 }
 ?>
 

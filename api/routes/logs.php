@@ -59,6 +59,8 @@ switch ($method) {
             
             $total = $drivingLog->countByUserId($user_id);
             $totalMinutes = $drivingLog->getTotalDrivingTime($user_id);
+            $daytimeMinutes = $drivingLog->getDaytimeDrivingTime($user_id);
+            $nighttimeMinutes = $drivingLog->getNighttimeDrivingTime($user_id);
             
             Response::success([
                 'logs' => $logs,
@@ -70,7 +72,11 @@ switch ($method) {
                 'stats' => [
                     'total_logs' => $total,
                     'total_driving_minutes' => $totalMinutes,
-                    'total_driving_hours' => round($totalMinutes / 60, 2)
+                    'total_driving_hours' => round($totalMinutes / 60, 2),
+                    'daytime_driving_minutes' => $daytimeMinutes,
+                    'daytime_driving_hours' => round($daytimeMinutes / 60, 2),
+                    'nighttime_driving_minutes' => $nighttimeMinutes,
+                    'nighttime_driving_hours' => round($nighttimeMinutes / 60, 2)
                 ]
             ]);
         }
