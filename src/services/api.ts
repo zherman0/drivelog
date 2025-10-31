@@ -2,7 +2,9 @@
  * API Service for DriveLog Backend
  */
 
-const API_BASE_URL = "http://localhost/driveapi";
+const API_BASE_URL = import.meta.env.PROD
+  ? "https://lucky13s.com/driveapi" // Production API URL
+  : "http://localhost/driveapi"; // Local development API URL
 
 export interface LoginRequest {
   username: string;
@@ -111,7 +113,7 @@ class ApiService {
 
       const data = await response.json();
       return data.success ? { valid: true, ...data.data } : { valid: false };
-    } catch (error) {
+    } catch {
       return { valid: false };
     }
   }
