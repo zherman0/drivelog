@@ -21,7 +21,7 @@ define('ALLOWED_ORIGIN', $credentials['allowed_origin']);
 error_reporting(E_ALL);
 ini_set('display_errors', '0'); // Set to '0' in production
 ini_set('log_errors', '1');
-ini_set('error_log', __DIR__ . '/../logs/php-errors.log');
+ini_set('error_log', __DIR__ . '/../error_logs/php-errors.log');
 
 // Timezone
 date_default_timezone_set('UTC');

@@ -1,0 +1,48 @@
+{
+  "name": "DriveLog - Track Your Driving Progress",
+  "short_name": "DriveLog",
+  "description": "Track your driving practice hours and progress toward your license. Perfect for student drivers and their parents.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#4682b4",
+  "theme_color": "#4682b4",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/car.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "lifestyle", "productivity"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your driving logs",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/car.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Add Log",
+      "short_name": "Add Log",
+      "description": "Add a new driving session",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/car.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}

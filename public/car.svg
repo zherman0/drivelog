@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .car-body { fill: #4285f4; }
+      .car-window { fill: #e3f2fd; }
+      .car-wheel { fill: #212121; }
+      .car-detail { fill: #1565c0; }
+    </style>
+  </defs>
+  
+  <!-- Car body -->
+  <path class="car-body" d="M 12 32 L 16 24 L 24 20 L 40 20 L 48 24 L 52 32 L 52 42 L 48 46 L 16 46 L 12 42 Z"/>
+  
+  <!-- Car roof -->
+  <path class="car-detail" d="M 20 32 L 24 24 L 40 24 L 44 32 Z"/>
+  
+  <!-- Windows -->
+  <path class="car-window" d="M 22 30 L 25 26 L 32 26 L 32 30 Z"/>
+  <path class="car-window" d="M 32 30 L 32 26 L 39 26 L 42 30 Z"/>
+  
+  <!-- Wheels -->
+  <circle class="car-wheel" cx="20" cy="44" r="6"/>
+  <circle class="car-wheel" cx="44" cy="44" r="6"/>
+  
+  <!-- Wheel centers -->
+  <circle fill="#757575" cx="20" cy="44" r="3"/>
+  <circle fill="#757575" cx="44" cy="44" r="3"/>
+  
+  <!-- Headlight -->
+  <circle fill="#fff176" cx="50" cy="36" r="2"/>
+</svg>
+

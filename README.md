@@ -21,17 +21,20 @@ DriveLog helps student drivers and their parents track driving practice sessions
 ## Tech Stack
 
 ### Frontend
+
 - **React** - UI framework
 - **TypeScript** - Type safety
 - **Vite** - Build tool and dev server
 
 ### Backend
+
 - **PHP** - RESTful API
 - **MariaDB/MySQL** - Database
 - **JWT** - Authentication tokens
 - **bcrypt + HMAC** - Password security (salt + pepper)
 
 ### Infrastructure
+
 - Apache with mod_rewrite
 - PDO for secure database access
 
@@ -110,16 +113,19 @@ Visit `http://localhost:5173`
 The API is fully documented in [api/README.md](api/README.md).
 
 ### Authentication
+
 - `POST /api/auth/register` - Register new user
 - `POST /api/auth/login` - Login and get JWT token
 - `POST /api/auth/verify` - Verify token
 
 ### User Management
+
 - `GET /api/users/:id` - Get user profile
 - `PUT /api/users/:id` - Update user
 - `DELETE /api/users/:id` - Delete account
 
 ### Driving Logs
+
 - `GET /api/logs` - Get all logs with stats
 - `POST /api/logs` - Create log entry
 - `GET /api/logs/:id` - Get specific log

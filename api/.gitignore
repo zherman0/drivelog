@@ -1,5 +1,5 @@
 # Log files
-logs/*.log
+error_logs/*.log
 
 # Credentials and sensitive configuration
 config/credentials.php
