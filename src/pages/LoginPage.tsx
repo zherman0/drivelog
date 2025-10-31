@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { FormEvent } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
@@ -21,11 +21,18 @@ import { useLogin } from "../hooks/useAuth";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const { setAuthData } = useAuth();
+  const { setAuthData, isAuthenticated } = useAuth();
   const loginMutation = useLogin();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  // Redirect to dashboard if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

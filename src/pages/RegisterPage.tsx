@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { FormEvent } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
@@ -25,7 +25,7 @@ import { useRegister } from "../hooks/useAuth";
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
-  const { setAuthData } = useAuth();
+  const { setAuthData, isAuthenticated } = useAuth();
   const registerMutation = useRegister();
 
   const [username, setUsername] = useState("");
@@ -33,6 +33,13 @@ export const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
+
+  // Redirect to dashboard if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
   const [birthdate, setBirthdate] = useState("");
 
   const [errors, setErrors] = useState({

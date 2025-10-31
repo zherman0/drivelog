@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Page,
   PageSection,
@@ -10,9 +11,18 @@ import {
 } from "@patternfly/react-core";
 import { CarIcon } from "@patternfly/react-icons";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export const HomePage = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+
+  // Redirect to dashboard if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <Page>
