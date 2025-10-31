@@ -96,8 +96,8 @@ export const DashboardPage = () => {
 
   return (
     <>
-      <AppHeader />
       <Page>
+        <AppHeader />
         <PageSection>
           <div
             style={{

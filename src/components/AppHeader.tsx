@@ -28,6 +28,16 @@ export const AppHeader = () => {
     navigate("/");
   };
 
+  const handleViewProfile = () => {
+    setIsDropdownOpen(false);
+    navigate("/profile");
+  };
+
+  const handleDashboard = () => {
+    setIsDropdownOpen(false);
+    navigate("/dashboard");
+  };
+
   const onToggleClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -35,7 +45,10 @@ export const AppHeader = () => {
   return (
     <Masthead>
       <MastheadMain>
-        <MastheadBrand>
+        <MastheadBrand
+          onClick={() => navigate("/dashboard")}
+          style={{ cursor: "pointer" }}
+        >
           <CarIcon style={{ marginRight: "0.5rem" }} />
           <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
             Drive Log
@@ -63,6 +76,12 @@ export const AppHeader = () => {
                   )}
                 >
                   <DropdownList>
+                    <DropdownItem onClick={handleDashboard}>
+                      Dashboard
+                    </DropdownItem>
+                    <DropdownItem onClick={handleViewProfile}>
+                      View Profile
+                    </DropdownItem>
                     <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
                   </DropdownList>
                 </Dropdown>

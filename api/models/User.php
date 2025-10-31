@@ -166,6 +166,39 @@ class User {
     }
 
     /**
+     * Update password
+     */
+    public function updatePassword($new_password) {
+        $query = "UPDATE " . $this->table_name . "
+                  SET password_hash = :password_hash
+                  WHERE user_id = :user_id";
+
+        $stmt = $this->conn->prepare($query);
+
+        // Hash the new password
+        $hashed_password = Auth::hashPassword($new_password);
+
+        // Sanitize
+        $this->user_id = htmlspecialchars(strip_tags($this->user_id));
+
+        // Bind values
+        $stmt->bindParam(":password_hash", $hashed_password);
+        $stmt->bindParam(":user_id", $this->user_id);
+
+        return $stmt->execute();
+    }
+
+    /**
+     * Verify password
+     */
+    public function verifyPassword($password) {
+        if (!$this->password_hash) {
+            return false;
+        }
+        return Auth::verifyPassword($password, $this->password_hash);
+    }
+
+    /**
      * Delete user
      */
     public function delete() {

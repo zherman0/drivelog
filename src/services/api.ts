@@ -131,6 +131,51 @@ class ApiService {
     return data.data;
   }
 
+  async updateUser(
+    userId: number,
+    userData: {
+      name?: string;
+      email?: string;
+      birthdate?: string;
+    }
+  ): Promise<User> {
+    const response = await fetch(`${this.baseUrl}/users/${userId}`, {
+      method: "PUT",
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify(userData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to update user");
+    }
+
+    return data.data;
+  }
+
+  async updatePassword(
+    userId: number,
+    passwordData: {
+      current_password: string;
+      new_password: string;
+    }
+  ): Promise<{ success: boolean; message: string }> {
+    const response = await fetch(`${this.baseUrl}/users/${userId}/password`, {
+      method: "PUT",
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify(passwordData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to update password");
+    }
+
+    return data;
+  }
+
   // Log management methods
   async getLogs() {
     const response = await fetch(`${this.baseUrl}/logs`, {

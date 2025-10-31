@@ -46,6 +46,7 @@ $uri = rtrim($uri, '/');
 $parts = explode('/', trim($uri, '/'));
 $endpoint = $parts[0] ?? '';
 $id = $parts[1] ?? null;
+$subendpoint = $parts[2] ?? null;
 
 // Route requests
 try {
@@ -55,7 +56,12 @@ try {
             break;
             
         case 'users':
-            require __DIR__ . '/routes/users.php';
+            // Check for password subendpoint
+            if ($id && $subendpoint === 'password') {
+                require __DIR__ . '/routes/password.php';
+            } else {
+                require __DIR__ . '/routes/users.php';
+            }
             break;
             
         case 'logs':
