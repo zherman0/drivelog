@@ -9,7 +9,7 @@ $credentials = require __DIR__ . '/credentials.php';
 // Security settings
 define('JWT_SECRET_KEY', $credentials['jwt_secret_key']);
 define('JWT_ALGORITHM', 'HS256');
-define('JWT_EXPIRATION', 86400); // 24 hours in seconds
+define('JWT_EXPIRATION', 2592000); // 30 days in seconds (30 * 24 * 60 * 60)
 
 // Password pepper (additional security layer beyond salt)
 define('PASSWORD_PEPPER', $credentials['password_pepper']);

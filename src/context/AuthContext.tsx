@@ -131,8 +131,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [logout]);
 
   const setAuthData = (newToken: string, newUser: User) => {
-    // Calculate expiry time (24 hours from now, matching backend JWT_EXPIRATION)
-    const expiryTime = Date.now() + 24 * 60 * 60 * 1000;
+    // Calculate expiry time (30 days from now, matching backend JWT_EXPIRATION)
+    const expiryTime = Date.now() + 30 * 24 * 60 * 60 * 1000;
 
     // Store in localStorage
     localStorage.setItem("token", newToken);
