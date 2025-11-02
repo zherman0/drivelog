@@ -27,7 +27,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router basename={import.meta.env.BASE_URL}>
         <AuthProvider>
-          <Page isManagedSidebar={false}>
+          <Page isManagedSidebar={false} sidebar={null}>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
