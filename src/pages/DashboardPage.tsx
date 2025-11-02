@@ -24,6 +24,7 @@ import {
   Progress,
   ProgressMeasureLocation,
   ProgressVariant,
+  Badge,
 } from "@patternfly/react-core";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import {
@@ -182,93 +183,22 @@ export const DashboardPage = () => {
             </Button>
           </div>
 
-          {/* License Eligibility Progress */}
-          {licenseProgress && (
-            <Card style={{ marginBottom: "1.5rem" }}>
-              <CardBody>
-                <Title
-                  headingLevel="h3"
-                  size="lg"
-                  style={{ marginBottom: "1rem" }}
-                >
-                  License Eligibility Progress
-                </Title>
-                {licenseProgress.isEligible ? (
-                  <Alert
-                    variant="success"
-                    title="You are eligible to get your driver's license now!"
-                    isInline
-                  >
-                    Congratulations! You've reached the minimum age requirement.
-                    Keep practicing and logging your driving hours!
-                  </Alert>
-                ) : (
-                  <div style={{ textAlign: "center", padding: "1.5rem 0" }}>
-                    <div
-                      style={{
-                        fontSize: "4rem",
-                        fontWeight: "bold",
-                        color: "var(--pf-v6-global--primary-color--100)",
-                        lineHeight: "1",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      {licenseProgress.daysRemaining}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: "1.25rem",
-                        color: "var(--pf-v6-global--Color--200)",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      Days Until Eligible
-                    </div>
-                    <div
-                      style={{
-                        fontSize: "0.95rem",
-                        color: "var(--pf-v6-global--Color--200)",
-                      }}
-                    >
-                      Current age: {licenseProgress.age} years old
-                    </div>
-                  </div>
-                )}
-              </CardBody>
-            </Card>
-          )}
-
           {/* Statistics Cards */}
           <Grid hasGutter>
-            <GridItem span={12} md={3} lg={2}>
+            <GridItem span={12} md={4} lg={4}>
               <Card isFullHeight>
-                <CardBody>
-                  <Title headingLevel="h3" size="lg">
-                    Total Driving Sessions
-                  </Title>
-                  <div
-                    style={{
-                      fontSize: "2rem",
-                      fontWeight: "bold",
-                      marginTop: "1rem",
-                    }}
+                <CardBody style={{ padding: "1rem" }}>
+                  <Title
+                    headingLevel="h3"
+                    size="md"
+                    style={{ marginBottom: "0.5rem" }}
                   >
-                    {stats.total_logs}
-                  </div>
-                </CardBody>
-              </Card>
-            </GridItem>
-            <GridItem span={12} md={3} lg={2}>
-              <Card isFullHeight>
-                <CardBody>
-                  <Title headingLevel="h3" size="lg">
                     Total Driving Hours
                   </Title>
                   <div
                     style={{
-                      fontSize: "2rem",
+                      fontSize: "1.75rem",
                       fontWeight: "bold",
-                      marginTop: "1rem",
                     }}
                   >
                     {stats.total_driving_hours}
@@ -276,34 +206,34 @@ export const DashboardPage = () => {
                 </CardBody>
               </Card>
             </GridItem>
-            <GridItem span={12} md={6} lg={4}>
+            <GridItem span={12} md={4} lg={4}>
               <Card isFullHeight>
-                <CardBody>
+                <CardBody style={{ padding: "1rem" }}>
                   <div
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: "1rem",
-                      marginBottom: "1rem",
+                      gap: "0.75rem",
+                      marginBottom: "0.5rem",
                     }}
                   >
                     <Icon status="warning">
                       <SunIcon
                         style={{
-                          fontSize: "2.5rem",
+                          fontSize: "1.75rem",
                           color: "var(--pf-v6-global--warning-color--100)",
                         }}
                       />
                     </Icon>
-                    <Title headingLevel="h3" size="lg">
+                    <Title headingLevel="h3" size="md">
                       Day Hours
                     </Title>
                   </div>
                   <div
                     style={{
-                      fontSize: "2rem",
+                      fontSize: "1.75rem",
                       fontWeight: "bold",
-                      marginBottom: "1rem",
+                      marginBottom: "0.5rem",
                     }}
                   >
                     {stats.daytime_driving_hours || 0} / 40
@@ -324,34 +254,34 @@ export const DashboardPage = () => {
                 </CardBody>
               </Card>
             </GridItem>
-            <GridItem span={12} md={6} lg={4}>
+            <GridItem span={12} md={4} lg={4}>
               <Card isFullHeight>
-                <CardBody>
+                <CardBody style={{ padding: "1rem" }}>
                   <div
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: "1rem",
-                      marginBottom: "1rem",
+                      gap: "0.75rem",
+                      marginBottom: "0.5rem",
                     }}
                   >
                     <Icon status="info">
                       <MoonIcon
                         style={{
-                          fontSize: "2.5rem",
+                          fontSize: "1.75rem",
                           color: "var(--pf-v6-global--info-color--100)",
                         }}
                       />
                     </Icon>
-                    <Title headingLevel="h3" size="lg">
+                    <Title headingLevel="h3" size="md">
                       Night Hours
                     </Title>
                   </div>
                   <div
                     style={{
-                      fontSize: "2rem",
+                      fontSize: "1.75rem",
                       fontWeight: "bold",
-                      marginBottom: "1rem",
+                      marginBottom: "0.5rem",
                     }}
                   >
                     {stats.nighttime_driving_hours || 0} / 10
@@ -378,13 +308,22 @@ export const DashboardPage = () => {
         <PageSection>
           <Card>
             <CardBody>
-              <Title
-                headingLevel="h2"
-                size="xl"
-                style={{ marginBottom: "1rem" }}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                  marginBottom: "1rem",
+                }}
               >
-                Driving Logs
-              </Title>
+                <Title headingLevel="h2" size="xl">
+                  Driving Logs
+                </Title>
+                <Badge isRead>
+                  {stats.total_logs}{" "}
+                  {stats.total_logs === 1 ? "session" : "sessions"}
+                </Badge>
+              </div>
 
               {isLoading && (
                 <div style={{ textAlign: "center", padding: "2rem" }}>
@@ -502,6 +441,64 @@ export const DashboardPage = () => {
             </CardBody>
           </Card>
         </PageSection>
+
+        {/* License Eligibility Progress - Moved to bottom */}
+        {licenseProgress && (
+          <PageSection>
+            <Card>
+              <CardBody>
+                <Title
+                  headingLevel="h3"
+                  size="lg"
+                  style={{ marginBottom: "1rem" }}
+                >
+                  License Eligibility Progress
+                </Title>
+                {licenseProgress.isEligible ? (
+                  <Alert
+                    variant="success"
+                    title="You are eligible to get your driver's license now!"
+                    isInline
+                  >
+                    Congratulations! You've reached the minimum age requirement.
+                    Keep practicing and logging your driving hours!
+                  </Alert>
+                ) : (
+                  <div style={{ textAlign: "center", padding: "1.5rem 0" }}>
+                    <div
+                      style={{
+                        fontSize: "4rem",
+                        fontWeight: "bold",
+                        color: "var(--pf-v6-global--primary-color--100)",
+                        lineHeight: "1",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      {licenseProgress.daysRemaining}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "1.25rem",
+                        color: "var(--pf-v6-global--Color--200)",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      Days Until Eligible
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "0.95rem",
+                        color: "var(--pf-v6-global--Color--200)",
+                      }}
+                    >
+                      Current age: {licenseProgress.age} years old
+                    </div>
+                  </div>
+                )}
+              </CardBody>
+            </Card>
+          </PageSection>
+        )}
       </Page>
 
       <AddLogModal
