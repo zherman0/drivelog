@@ -59,6 +59,21 @@ class ApiService {
     };
   }
 
+  private handleUnauthorized() {
+    // Dispatch custom event for 401 errors
+    // AuthContext will listen for this and handle logout
+    window.dispatchEvent(new CustomEvent("auth:unauthorized"));
+  }
+
+  private async handleResponse(response: Response) {
+    // Check for 401 Unauthorized
+    if (response.status === 401) {
+      this.handleUnauthorized();
+      throw new Error("Authentication required. Please log in again.");
+    }
+    return response;
+  }
+
   async login(credentials: LoginRequest): Promise<AuthResponse> {
     const response = await fetch(`${this.baseUrl}/auth/login`, {
       method: "POST",
@@ -124,6 +139,7 @@ class ApiService {
       headers: this.getAuthHeaders(),
     });
 
+    await this.handleResponse(response);
     const data = await response.json();
 
     if (!response.ok) {
@@ -147,6 +163,7 @@ class ApiService {
       body: JSON.stringify(userData),
     });
 
+    await this.handleResponse(response);
     const data = await response.json();
 
     if (!response.ok) {
@@ -169,6 +186,7 @@ class ApiService {
       body: JSON.stringify(passwordData),
     });
 
+    await this.handleResponse(response);
     const data = await response.json();
 
     if (!response.ok) {
@@ -185,6 +203,7 @@ class ApiService {
       headers: this.getAuthHeaders(),
     });
 
+    await this.handleResponse(response);
     const data = await response.json();
 
     if (!response.ok) {
@@ -206,6 +225,7 @@ class ApiService {
       body: JSON.stringify(logData),
     });
 
+    await this.handleResponse(response);
     const data = await response.json();
 
     if (!response.ok) {
@@ -230,6 +250,7 @@ class ApiService {
       body: JSON.stringify(logData),
     });
 
+    await this.handleResponse(response);
     const data = await response.json();
 
     if (!response.ok) {
@@ -245,6 +266,7 @@ class ApiService {
       headers: this.getAuthHeaders(),
     });
 
+    await this.handleResponse(response);
     const data = await response.json();
 
     if (!response.ok) {
