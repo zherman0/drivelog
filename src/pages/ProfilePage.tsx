@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import {
-  Page,
   PageSection,
   Card,
   CardBody,
@@ -18,7 +17,6 @@ import {
 } from "@patternfly/react-core";
 import { useAuth } from "../context/AuthContext";
 import { useUpdateUser, useUpdatePassword } from "../hooks/useAuth";
-import { AppHeader } from "../components/AppHeader";
 
 export const ProfilePage = () => {
   const { user, setAuthData } = useAuth();
@@ -110,18 +108,14 @@ export const ProfilePage = () => {
 
   if (!user) {
     return (
-      <Page>
-        <AppHeader />
-        <PageSection isFilled>
-          <Spinner size="xl" />
-        </PageSection>
-      </Page>
+      <PageSection isFilled>
+        <Spinner size="xl" />
+      </PageSection>
     );
   }
 
   return (
-    <Page>
-      <AppHeader />
+    <>
       <PageSection>
         <Grid hasGutter>
           <GridItem span={12} md={8} mdOffset={2}>
@@ -422,6 +416,6 @@ export const ProfilePage = () => {
           </GridItem>
         </Grid>
       </PageSection>
-    </Page>
+    </>
   );
 };
