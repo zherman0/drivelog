@@ -21,6 +21,9 @@ import {
   Icon,
   Flex,
   FlexItem,
+  Progress,
+  ProgressMeasureLocation,
+  ProgressVariant,
 } from "@patternfly/react-core";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import {
@@ -109,6 +112,51 @@ export const DashboardPage = () => {
     return `${minutes}m`;
   };
 
+  // Calculate days until user turns 16
+  const calculateLicenseProgress = () => {
+    if (!user?.birthdate) {
+      return null;
+    }
+
+    const today = new Date();
+    const birthDate = new Date(user.birthdate);
+
+    // Calculate 16th birthday
+    const sixteenthBirthday = new Date(birthDate);
+    sixteenthBirthday.setFullYear(birthDate.getFullYear() + 16);
+
+    // Calculate age in years
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    // If already 16 or older
+    if (age >= 16) {
+      return {
+        isEligible: true,
+        daysRemaining: 0,
+        age,
+      };
+    }
+
+    // Calculate days remaining until 16th birthday
+    const diffTime = sixteenthBirthday.getTime() - today.getTime();
+    const daysRemaining = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return {
+      isEligible: false,
+      daysRemaining,
+      age,
+    };
+  };
+
+  const licenseProgress = calculateLicenseProgress();
+
   return (
     <>
       <Page>
@@ -134,9 +182,65 @@ export const DashboardPage = () => {
             </Button>
           </div>
 
+          {/* License Eligibility Progress */}
+          {licenseProgress && (
+            <Card style={{ marginBottom: "1.5rem" }}>
+              <CardBody>
+                <Title
+                  headingLevel="h3"
+                  size="lg"
+                  style={{ marginBottom: "1rem" }}
+                >
+                  License Eligibility Progress
+                </Title>
+                {licenseProgress.isEligible ? (
+                  <Alert
+                    variant="success"
+                    title="You are eligible to get your driver's license now!"
+                    isInline
+                  >
+                    Congratulations! You've reached the minimum age requirement.
+                    Keep practicing and logging your driving hours!
+                  </Alert>
+                ) : (
+                  <div style={{ textAlign: "center", padding: "1.5rem 0" }}>
+                    <div
+                      style={{
+                        fontSize: "4rem",
+                        fontWeight: "bold",
+                        color: "var(--pf-v6-global--primary-color--100)",
+                        lineHeight: "1",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      {licenseProgress.daysRemaining}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "1.25rem",
+                        color: "var(--pf-v6-global--Color--200)",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      Days Until Eligible
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "0.95rem",
+                        color: "var(--pf-v6-global--Color--200)",
+                      }}
+                    >
+                      Current age: {licenseProgress.age} years old
+                    </div>
+                  </div>
+                )}
+              </CardBody>
+            </Card>
+          )}
+
           {/* Statistics Cards */}
           <Grid hasGutter>
-            <GridItem span={12} md={6} lg={3}>
+            <GridItem span={12} md={3} lg={2}>
               <Card isFullHeight>
                 <CardBody>
                   <Title headingLevel="h3" size="lg">
@@ -154,7 +258,7 @@ export const DashboardPage = () => {
                 </CardBody>
               </Card>
             </GridItem>
-            <GridItem span={12} md={6} lg={3}>
+            <GridItem span={12} md={3} lg={2}>
               <Card isFullHeight>
                 <CardBody>
                   <Title headingLevel="h3" size="lg">
@@ -172,7 +276,7 @@ export const DashboardPage = () => {
                 </CardBody>
               </Card>
             </GridItem>
-            <GridItem span={12} md={6} lg={3}>
+            <GridItem span={12} md={6} lg={4}>
               <Card isFullHeight>
                 <CardBody>
                   <div
@@ -180,7 +284,7 @@ export const DashboardPage = () => {
                       display: "flex",
                       alignItems: "center",
                       gap: "1rem",
-                      marginBottom: "0.5rem",
+                      marginBottom: "1rem",
                     }}
                   >
                     <Icon status="warning">
@@ -199,15 +303,28 @@ export const DashboardPage = () => {
                     style={{
                       fontSize: "2rem",
                       fontWeight: "bold",
-                      marginTop: "1rem",
+                      marginBottom: "1rem",
                     }}
                   >
-                    {stats.daytime_driving_hours || 0}
+                    {stats.daytime_driving_hours || 0} / 40
                   </div>
+                  <Progress
+                    value={Math.min(
+                      ((stats.daytime_driving_hours || 0) / 40) * 100,
+                      100
+                    )}
+                    title="Progress to 40 hours"
+                    measureLocation={ProgressMeasureLocation.top}
+                    variant={
+                      (stats.daytime_driving_hours || 0) >= 40
+                        ? ProgressVariant.success
+                        : undefined
+                    }
+                  />
                 </CardBody>
               </Card>
             </GridItem>
-            <GridItem span={12} md={6} lg={3}>
+            <GridItem span={12} md={6} lg={4}>
               <Card isFullHeight>
                 <CardBody>
                   <div
@@ -215,7 +332,7 @@ export const DashboardPage = () => {
                       display: "flex",
                       alignItems: "center",
                       gap: "1rem",
-                      marginBottom: "0.5rem",
+                      marginBottom: "1rem",
                     }}
                   >
                     <Icon status="info">
@@ -234,11 +351,24 @@ export const DashboardPage = () => {
                     style={{
                       fontSize: "2rem",
                       fontWeight: "bold",
-                      marginTop: "1rem",
+                      marginBottom: "1rem",
                     }}
                   >
-                    {stats.nighttime_driving_hours || 0}
+                    {stats.nighttime_driving_hours || 0} / 10
                   </div>
+                  <Progress
+                    value={Math.min(
+                      ((stats.nighttime_driving_hours || 0) / 10) * 100,
+                      100
+                    )}
+                    title="Progress to 10 hours"
+                    measureLocation={ProgressMeasureLocation.top}
+                    variant={
+                      (stats.nighttime_driving_hours || 0) >= 10
+                        ? ProgressVariant.success
+                        : undefined
+                    }
+                  />
                 </CardBody>
               </Card>
             </GridItem>

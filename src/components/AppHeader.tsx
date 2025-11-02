@@ -47,9 +47,9 @@ export const AppHeader = () => {
       <MastheadMain>
         <MastheadBrand
           onClick={() => navigate("/dashboard")}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
         >
-          <CarIcon style={{ marginRight: "0.5rem" }} />
+          <CarIcon style={{ marginRight: "0.5rem", fontSize: "2.5rem" }} />
           <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
             Drive Log
           </span>
