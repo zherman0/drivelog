@@ -11,6 +11,8 @@ import {
   Button,
   Flex,
   FlexItem,
+  Stack,
+  StackItem,
 } from "@patternfly/react-core";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import {
@@ -20,6 +22,7 @@ import {
   SunIcon,
 } from "@patternfly/react-icons";
 import { formatDateTime, calculateDuration } from "../utils/helpers";
+import { useIsMobile } from "../hooks/useMediaQuery";
 
 interface DrivingLog {
   log_id: number;
@@ -58,6 +61,8 @@ export const DrivingLogsTable = ({
   onDelete,
   onAddLog,
 }: DrivingLogsTableProps) => {
+  const isMobile = useIsMobile();
+
   return (
     <Card>
       <CardBody>
@@ -106,7 +111,8 @@ export const DrivingLogsTable = ({
           </EmptyState>
         )}
 
-        {!isLoading && !isError && logs.length > 0 && (
+        {/* Desktop view: Table */}
+        {!isLoading && !isError && logs.length > 0 && !isMobile && (
           <Table aria-label="Driving logs table" variant="compact" isStriped>
             <Thead>
               <Tr>
@@ -173,6 +179,103 @@ export const DrivingLogsTable = ({
               ))}
             </Tbody>
           </Table>
+        )}
+
+        {/* Mobile view: Card-based list */}
+        {!isLoading && !isError && logs.length > 0 && isMobile && (
+          <Stack hasGutter>
+            {logs.map((log) => (
+              <StackItem key={log.log_id}>
+                <Card isCompact>
+                  <CardBody>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-start",
+                        marginBottom: "0.75rem",
+                      }}
+                    >
+                      <div style={{ flex: 1 }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.5rem",
+                            marginBottom: "0.25rem",
+                          }}
+                        >
+                          {log.is_nighttime ? (
+                            <>
+                              <MoonIcon />
+                              <strong>Night Drive</strong>
+                            </>
+                          ) : (
+                            <>
+                              <SunIcon />
+                              <strong>Day Drive</strong>
+                            </>
+                          )}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: "0.875rem",
+                            color: "var(--pf-v6-global--Color--200)",
+                          }}
+                        >
+                          {calculateDuration(log.start_time, log.end_time)}
+                        </div>
+                      </div>
+                      <Flex spaceItems={{ default: "spaceItemsNone" }}>
+                        <FlexItem>
+                          <Button
+                            variant="plain"
+                            icon={<EditIcon />}
+                            onClick={() => onEdit(log)}
+                            aria-label="Edit log"
+                          />
+                        </FlexItem>
+                        <FlexItem>
+                          <Button
+                            variant="plain"
+                            icon={<TrashIcon />}
+                            onClick={() => onDelete(log.log_id)}
+                            aria-label="Delete log"
+                            isDanger
+                          />
+                        </FlexItem>
+                      </Flex>
+                    </div>
+                    <div style={{ marginBottom: "0.5rem" }}>
+                      <div
+                        style={{
+                          fontSize: "0.875rem",
+                          color: "var(--pf-v6-global--Color--200)",
+                        }}
+                      >
+                        <div>
+                          <strong>Start:</strong>{" "}
+                          {formatDateTime(log.start_time)}
+                        </div>
+                        <div>
+                          <strong>End:</strong> {formatDateTime(log.end_time)}
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        paddingTop: "0.5rem",
+                        borderTop:
+                          "1px solid var(--pf-v6-global--BorderColor--100)",
+                      }}
+                    >
+                      {log.description}
+                    </div>
+                  </CardBody>
+                </Card>
+              </StackItem>
+            ))}
+          </Stack>
         )}
       </CardBody>
     </Card>
